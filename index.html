@@ -1,91 +1,145 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Be My Valentine ❤️</title>
-  <style>
-    body {
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(135deg, #ff758c, #ff7eb3);
-      font-family: Arial, sans-serif;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<title>Hey ❤️ I have a question</title>
 
-    .card {
-      background: white;
-      padding: 40px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+<!-- Link preview -->
+<meta property="og:title" content="Hey ❤️ I have something to ask you">
+<meta property="og:description" content="Don’t even try pressing No 😏">
 
-    h1 {
-      margin-bottom: 30px;
-      color: #ff4d6d;
-    }
+<style>
+body {
+height: 100vh;
+margin: 0;
+display: flex;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, #ff758c, #ff7eb3);
+font-family: Arial, sans-serif;
+overflow: hidden;
+}
 
-    button {
-      padding: 12px 30px;
-      font-size: 18px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+.card {
+background: white;
+padding: 40px;
+border-radius: 15px;
+text-align: center;
+box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+z-index: 2;
+}
 
-    #yes {
-      background-color: #ff4d6d;
-      color: white;
-      margin-right: 20px;
-    }
+h1 {
+color: #ff4d6d;
+margin-bottom: 25px;
+}
 
-    #no {
-      background-color: #ccc;
-      position: absolute;
-    }
-  </style>
+button {
+padding: 12px 30px;
+font-size: 18px;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+}
+
+#yes {
+background-color: #ff4d6d;
+color: white;
+margin-right: 15px;
+}
+
+#no {
+background-color: #ccc;
+position: absolute;
+z-index: 1;
+}
+
+.heart {
+position: fixed;
+font-size: 24px;
+animation: floatUp 3s linear forwards;
+}
+
+@keyframes floatUp {
+from {
+opacity: 1;
+transform: translateY(0);
+}
+to {
+opacity: 0;
+transform: translateY(-300px);
+}
+}
+</style>
 </head>
 <body>
 
-  <div class="card">
-    <h1>Will you be my Valentine? ❤️</h1>
-    <button id="yes" onclick="yesClicked()">Yes 💖</button>
-  </div>
+<div class="card">
+<h1>Will you be my Valentine? ❤️</h1>
+<button id="yes">Yes 💖</button>
+</div>
 
-  <button id="no">No 😭</button>
+<button id="no">No 😭</button>
 
-  <script>
-    const noBtn = document.getElementById("no");
+<!-- Background music -->
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8fcb9a2c3a.mp3" loop></audio>
 
-    function moveButton() {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-    }
+<script>
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const music = document.getElementById("music");
 
-    noBtn.addEventListener("mouseover", moveButton);
-    noBtn.addEventListener("click", moveButton);
+function moveNoButton() {
+const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+noBtn.style.left = x + "px";
+noBtn.style.top = y + "px";
+}
 
-    function yesClicked() {
-      document.body.innerHTML = `
-        <div style="
-          display:flex;
-          align-items:center;
-          justify-content:center;
-          height:100vh;
-          background: linear-gradient(135deg, #ff758c, #ff7eb3);
-          font-family: Arial;
-          color:white;
-          text-align:center;
-        ">
-          <h1>Yayyy! 💕🥰<br>You just made my Valentine ❤️</h1>
-        </div>
-      `;
-    }
-  </script>
+// Desktop + mobile dodge
+noBtn.addEventListener("mouseover", moveNoButton);
+noBtn.addEventListener("touchstart", moveNoButton);
+noBtn.addEventListener("click", moveNoButton);
+
+yesBtn.addEventListener("click", () => {
+music.play();
+launchHearts();
+
+document.body.innerHTML = `
+<div style="
+display:flex;
+align-items:center;
+justify-content:center;
+height:100vh;
+background: linear-gradient(135deg, #ff758c, #ff7eb3);
+color:white;
+font-family: Arial;
+text-align:center;
+font-size:32px;
+">
+<h1>I KNOW YOU WANT ME 😂❤️</h1>
+</div>
+`;
+});
+
+function launchHearts() {
+for (let i = 0; i < 40; i++) {
+const heart = document.createElement("div");
+heart.className = "heart";
+heart.innerText = "💖";
+heart.style.left = Math.random() * 100 + "vw";
+heart.style.top = "100vh";
+heart.style.animationDuration = 2 + Math.random() * 2 + "s";
+document.body.appendChild(heart);
+
+setTimeout(() => {
+heart.remove();
+}, 4000);
+}
+}
+</script>
 
 </body>
 </html>
